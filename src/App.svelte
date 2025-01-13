@@ -14,9 +14,11 @@
 <main>
   <form class="max-w-3xl m-auto grid gap-y-6">
     <section>
-      <a href="https://wellsync.com" target="_blank" class="flex">
-        <img src="/logo.svg" alt="WellSync" class="rounded-md w-1/12" />
-      </a>
+      <div class="w-1/12">
+        <a href="https://wellsync.com" target="_blank">
+          <img src="/logo.svg" alt="WellSync" class="rounded-md w-full" />
+        </a>
+      </div>
       <Patient id={patient} />
     </section>
 
