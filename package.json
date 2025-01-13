@@ -1,0 +1,28 @@
+{
+  "name": "pharmacy",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+    "generate:openapi": "openapi-typescript https://services.careconnect.dev.wellsync.io/openapi.yaml -o ./src/lib/api/types.generated.ts"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tsconfig/svelte": "^5.0.4",
+    "autoprefixer": "^10.4.20",
+    "openapi-typescript": "^7.5.2",
+    "postcss": "^8.4.49",
+    "svelte": "^5.15.0",
+    "svelte-check": "^4.1.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.13.4"
+  }
+}
