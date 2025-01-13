@@ -12,7 +12,7 @@
     type Dosage,
   } from "../lib/api";
   import Empty from "./Empty.svelte";
-  import { importPrivateKey, signData } from "../lib/crypto";
+  import { signData } from "../lib/crypto";
 
   export let patientId: string;
   export let clinicianId: string;
@@ -44,35 +44,6 @@
   async function submission() {
     loading = true;
 
-    const privateKey = `-----BEGIN PRIVATE KEY-----
-MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC6fY20I4ZnRMZQ
-rgvNjc0JtAim3nosUQmEE8dotmiE9Y3vSAs+u3G6/mHLk4ZOvicstnvkGmmkabfs
-FOYJsmtg6xQiaKbADYHmK8WGSoJGYTgS8cDmKhmdLgw1gK4/f12PuSHPNh687yAm
-3iyYvwLPF9EecKOhwnSU20HOMjtVqOtE5Dh3x1ZYqPkfLWqzj3w844Q9B10HpuNQ
-juVS3qkST3Inp7O9ub1bCxwuIn+SiG3NssKRfLqXNLdy8Ghtfzepy0lGO4Jt1hZm
-MXqKRAadryOfStJ2A9XQS1HT0/KCo0tHMC7Mv2H+PkOwwmHSJZKXcepy2bnLIYGf
-4qHPA4M1AgMBAAECggEAHpMD/uMOH3Mikkqei8IyOeOGwZja7dYRWdKGUFALfbTm
-YrLsiQnhIPegn+gdTl6VfJqkYCbGaBqe+TkJ59AVE6wmvmdq4zSztcE6XoRrrE83
-CsAQ0ItZbLAGd2UT7Dwc4jnHZbnpOy93FXg6VoaGVt6APd3YreX8CAWUWdJZcPb6
-/VvqQMkktLGid4cjwxqfAKAcNeJXtSEp+vlVH+F3k4kY/vtU8C0XvIJx24JmDsJy
-RF7+5BMfZao70+e+HCDpkevXVRPd0xNbypVazJ279caRck6RkBYEhuOMxWTdYM3m
-sdSpPueN93Lnfua6QMPtBMsN1c4LqXC9sXxOpIdjpwKBgQD3UvqcKVPV1MYpeO/6
-9/R89jrMTlKxV9auXVv6PALCJMdQsI6PQpU9XWFDMJZkJb0Ifuz5STwtH5+TneKM
-I+rRw/HDfmM9r79FfyHJACuvQK/e16RFOneAAri5t93sUsE+EC1aWmnAGiBXbqJN
-DgqMyAIplX67VCnCPAL50TpNMwKBgQDBCEaQyyvtsMEhCR2uY8j6pdqOBbuBrpPR
-HXucCn202GHFFuFkJ/0U6etQKHCuf/+P/BPk3wkcHoqJmjCiZ6XSdzQFKDqNv0m5
-R8Sk2ksHkbxS5ly0pjdF7NSpBvFxbKs0MF3zfZLC7Qr4czOsqGpSPUX4nwdyy9Ou
-/gprzGrd9wKBgGLBvpJGqlQzDyGWSfUjt3uCcr4L9FceJPohC04jUlKljvT4WyR3
-SNJlDCZhK1w3+YB/9i4ggSfffb/bBpBA803peQs/127VU4HzntD9AXSMVu2bm9uM
-2hTCgXKfKb1o2gLnQMTYX2u2wv1GjwZHugy2/K4QJLe2hqopfmK0mhwjAoGBALqO
-7/xCkAsh2BXAhLIleHleT9MRET5tZiklsHCH5yQgOKXNzjoJN9y9kxIec4EC7hDP
-VL7PHDPUBJqmrbhYKfg2As21KpoSNQNfrFqTKw5+uB76ysBBIIxxLrrJnhG8L965
-nCOWyn+frwmd9WQ6RL+EvpphwEYfXk/y8EltAB/TAoGBAOhReU0+WLMeLAfok/yl
-0Vjzwye4/Aj+MnWvDJf2EmT7eP4uW5WTkh3KJN4eaurkyBrPIT0xT2kSwVY1uDei
-ZtMLENbhC57DK5sLs9R88MdcPrZecHvkfFiVvlIU0RxYXoN+Dx4M3/3wxNyD2EdZ
-ZW2QGU2qkCxID9F4pxD24s3U
------END PRIVATE KEY-----`;
-
     const msg = JSON.stringify({
       patientId,
       clinicianId,
@@ -82,8 +53,7 @@ ZW2QGU2qkCxID9F4pxD24s3U
       date: new Date().toISOString(),
     });
 
-    const key = await importPrivateKey(privateKey);
-    const { signature, fingerprint } = await signData(key, msg);
+    const { signature, fingerprint } = await signData(msg);
     console.log(signature, fingerprint);
 
     signatureFingerprint = fingerprint;
