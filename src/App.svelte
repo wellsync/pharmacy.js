@@ -3,6 +3,8 @@
   const clinician = "xyz";
   const drug = "semaglutide-compound";
 
+  import "@iframe-resizer/child";
+
   import Logo from "./assets/logo.svg";
   import Patient from "./components/Patient.svelte";
   import Prescription from "./components/Prescription.svelte";
