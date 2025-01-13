@@ -40,7 +40,7 @@
       }
 
       this._iframe = document.createElement("iframe");
-      this._iframe.frameBorder = 0;
+      this._iframe.style.border = "none";
       this._iframe.width = "100%";
       this._iframe.src = widget.href;
 
