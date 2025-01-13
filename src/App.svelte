@@ -1,7 +1,9 @@
 <script lang="ts">
-  const patient = "5432";
-  const clinician = "xyz";
-  const drug = "semaglutide-compound";
+  const params = new URLSearchParams(window.location.search);
+
+  const patient = params.get("patient") || "";
+  const clinician = params.get("clinician") || "";
+  const drug = params.get("drug") || "";
 
   import "@iframe-resizer/child";
 
