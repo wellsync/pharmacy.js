@@ -35,6 +35,10 @@
       widget.searchParams.append("clinician", options.clinician);
       widget.searchParams.append("patient", options.patient);
 
+      if (options.environment) {
+        widget.searchParams.append("environment", options.environment);
+      }
+
       if (options.drug) {
         widget.searchParams.append("drug", options.drug);
       }
