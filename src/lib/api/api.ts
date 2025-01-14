@@ -6,7 +6,18 @@ export type Drug = components['schemas']['Drug'];
 export type Pharmacy = components['schemas']['PharmacyDetails'];
 export type Dosage = components['schemas']['Dosage'];
 
-const fetcher = createClient<paths>({ baseUrl: "https://services.careconnect.dev.wellsync.io" });
+const params = new URLSearchParams(window.location.search);
+
+const environments = {
+    dev: 'https://services.careconnect.dev.wellsync.io',
+    stg: 'https://services.careconnect.stg.wellsync.io',
+    prd: 'https://services.careconnect.prd.wellsync.io',
+};
+
+const param = (params.get("environment") as 'dev' | 'stg' | 'prd') || "prd";
+const environment = environments[param] || environments.prd;
+
+const fetcher = createClient<paths>({ baseUrl: environment });
 
 fetcher.use({
     onRequest: async ({ request }) => {
