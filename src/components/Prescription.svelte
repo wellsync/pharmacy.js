@@ -31,8 +31,6 @@
   let drugs: Drug[] = [];
   let dosages: Dosage[] = [];
 
-  console.log(preferredDrugs.message);
-
   let selectedDrugId: string = preferredDrugs?.selected[0] ?? null;
   let selectedDosageConcentration: string;
   let prescriptionDirections: string;
