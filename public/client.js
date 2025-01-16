@@ -31,6 +31,7 @@
       const widget = new URL("https://pharmacy.js.wellsync.io");
 
       widget.searchParams.append("session", session);
+      widget.searchParams.append("case", options.case);
       widget.searchParams.append("clinic", options.clinic);
       widget.searchParams.append("clinician", options.clinician);
       widget.searchParams.append("patient", options.patient);
@@ -39,8 +40,22 @@
         widget.searchParams.append("environment", options.environment);
       }
 
-      if (options.drug) {
-        widget.searchParams.append("drug", options.drug);
+      if (
+        options.drugs &&
+        typeof options.drugs === "object" &&
+        !Array.isArray(options.drugs)
+      ) {
+        if (options.drugs.message) {
+          widget.searchParams.append("drugs.message", options.drugs.message);
+        }
+
+        if (Array.isArray(options.drugs)) {
+          if (options.drugs.length > 1) {
+            throw new Error("we only support one drug at the moment");
+          }
+
+          widget.searchParams.append("drugs.selected", options.drugs.join(","));
+        }
       }
 
       this._iframe = document.createElement("iframe");

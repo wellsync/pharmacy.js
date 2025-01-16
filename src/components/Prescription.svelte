@@ -14,16 +14,26 @@
   import Empty from "./Empty.svelte";
   import { signData } from "../lib/crypto";
 
+  export let caseId: string;
   export let patientId: string;
   export let clinicianId: string;
-  export let preferredDrugId: string = "";
+
+  type PreferredDrugs = {
+    message: string;
+    selected: string[];
+  };
+
+  // NOTE: we only support a single drug selection at the moment
+  export let preferredDrugs: PreferredDrugs;
 
   let loading = false;
   let submitted = false;
   let drugs: Drug[] = [];
   let dosages: Dosage[] = [];
 
-  let selectedDrugId: string = preferredDrugId ?? null;
+  console.log(preferredDrugs.message);
+
+  let selectedDrugId: string = preferredDrugs?.selected[0] ?? null;
   let selectedDosageConcentration: string;
   let prescriptionDirections: string;
   let pharmacy: Pharmacy | null;
@@ -34,7 +44,7 @@
   async function load() {
     drugs = (await getDrugs(patientId)) || [];
 
-    if (!preferredDrugId) {
+    if (!preferredDrugs.selected) {
       selectedDrugId = drugs[0].id!;
     }
 
@@ -99,10 +109,8 @@
 <section>
   {#if !submitted}
     <Header title="Prescription">
-      {#if preferredDrugId}
-        <Alert
-          message="The medication was chosen based on the patient’s preference and cannot be changed"
-        />
+      {#if preferredDrugs}
+        <Alert message={preferredDrugs.message} />
       {/if}
     </Header>
 
@@ -113,7 +121,6 @@
         </label>
         <div class="mt-2 grid grid-cols-1">
           <Select
-            disabled={preferredDrugId != ""}
             options={drugOptions}
             bind:value={selectedDrugId}
             on:change={fetchPharmacy}
