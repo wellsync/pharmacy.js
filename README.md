@@ -14,6 +14,9 @@ new PharmacyOrder("#order", "super-secret-key", {
   clinician: "...",
   privateKey: "...",
   patient: "...",
-  drug: "...", // optional
+  drugs: {
+    message: "The medication was chosen based on the patient’s preference",
+    selected: ["..."],
+  }, // optional
 });
 ```

@@ -1,9 +1,16 @@
 <script lang="ts">
   const params = new URLSearchParams(window.location.search);
 
+  const caseId = params.get("case") || "";
   const patient = params.get("patient") || "";
   const clinician = params.get("clinician") || "";
-  const drug = params.get("drug") || "";
+
+  const drugs = {
+    message:
+      params.get("drugs.message") ||
+      "The medication was chosen based on the patient’s preference",
+    selected: (params.get("drugs.selected") || "").split(","),
+  };
 
   import "@iframe-resizer/child";
 
@@ -23,9 +30,10 @@
     </section>
 
     <Prescription
+      {caseId}
       patientId={patient}
       clinicianId={clinician}
-      preferredDrugId={drug}
+      preferredDrugs={drugs}
     />
   </form>
 </main>
