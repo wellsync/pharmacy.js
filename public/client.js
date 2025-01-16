@@ -49,12 +49,15 @@
           widget.searchParams.append("drugs.message", options.drugs.message);
         }
 
-        if (Array.isArray(options.drugs)) {
-          if (options.drugs.length > 1) {
+        if (Array.isArray(options.drugs.selected)) {
+          if (options.drugs.selected.length > 1) {
             throw new Error("we only support one drug at the moment");
           }
 
-          widget.searchParams.append("drugs.selected", options.drugs.join(","));
+          widget.searchParams.append(
+            "drugs.selected",
+            options.drugs.selected.join(",")
+          );
         }
       }
 
