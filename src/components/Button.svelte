@@ -1,6 +1,7 @@
 <script lang="ts">
   export let type: "submit" | "danger" = "submit";
   export let loading = false;
+  export let full = false;
 
   const styles = [
     {
@@ -15,13 +16,14 @@
     },
   ];
 
+  const fullClass = full ? "inline-flex w-full justify-center" : "";
   const style = styles.find((icon) => icon.type === type) || styles[0];
 </script>
 
 <button
   on:click
   type="button"
-  class="inline-flex items-center rounded-md {style.background} {style.hover} px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+  class="inline-flex items-center rounded-md {style.background} {style.hover} {fullClass} px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 >
   {#if loading}
     <svg

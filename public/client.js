@@ -36,6 +36,11 @@
       widget.searchParams.append("clinician", options.clinician);
       widget.searchParams.append("patient", options.patient);
 
+      if (options.wrapperKey) {
+        widget.searchParams.append("wrapper_key", options.wrapperKey);
+        widget.searchParams.append("private_key", options.privateKey);
+      }
+
       if (options.environment) {
         widget.searchParams.append("environment", options.environment);
       }
@@ -76,7 +81,9 @@
         "https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.3.2"
       );
 
-      this._privateKey = await this._importPrivateKey(options.privateKey);
+      if (!options.wrapperKey) {
+        this._privateKey = await this._importPrivateKey(options.privateKey);
+      }
 
       let target = document.querySelector(elementSelector);
       if (!target) {
@@ -115,11 +122,6 @@
     }
 
     async handleMessage(event) {
-      if (!this._privateKey) {
-        console.error("Private key not initialized.");
-        return;
-      }
-
       const { type, data, requestId } = event.data;
 
       if (type === "SIGN_REQUEST" && data) {

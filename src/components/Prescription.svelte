@@ -12,9 +12,9 @@
     type Dosage,
   } from "../lib/api";
   import Empty from "./Empty.svelte";
-  import { signData } from "../lib/crypto";
 
-  export let caseId: string;
+  import { type Signature } from "../lib/crypto";
+
   export let patientId: string;
   export let clinicianId: string;
 
@@ -25,6 +25,8 @@
 
   // NOTE: we only support a single drug selection at the moment
   export let preferredDrugs: PreferredDrugs;
+
+  export let signPrescription: (prescription: string) => Promise<Signature>;
 
   let loading = false;
   let submitted = false;
@@ -52,16 +54,16 @@
   async function submission() {
     loading = true;
 
-    const msg = JSON.stringify({
+    const prescription = JSON.stringify({
       patientId,
       clinicianId,
       drugId: selectedDrugId,
       dosage: selectedDosageConcentration,
       directions: prescriptionDirections,
-      date: new Date().toISOString(),
+      date: new Date(),
     });
 
-    const { signature, fingerprint } = await signData(msg);
+    const { signature, fingerprint } = await signPrescription(prescription);
     console.log(signature, fingerprint);
 
     signatureFingerprint = fingerprint;
@@ -96,7 +98,7 @@
     pharmacy = (await getPharmacy(patientId, selectedDrugId)) ?? null;
     if (!pharmacy) {
       pharmacyError =
-        "We were unable to find a mail order pharmacy for the given patient and selected medication";
+        "We were unable to find a mail order pharmacy for the gscriptatient and selected medication";
     }
     // TODO: show error if no pharmacy is found
   }
