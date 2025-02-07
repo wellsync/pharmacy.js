@@ -40,11 +40,11 @@ export const getPatient = async (externalId: string) => {
     return data?.patient as Patient;
 };
 
-export const getDrugs = async (patientExternalId: string) => {
-    const { data } = await fetcher.GET('/v1/drugs', {
+export const getDrugs = async (patientId: string) => {
+    const { data } = await fetcher.GET('/v1/patients/{patientId}/drugs', {
         params: {
-            query: {
-                patientExternalId,
+            path: {
+                patientId,
             }
         }
     });

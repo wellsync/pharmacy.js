@@ -10,6 +10,7 @@
     type Drug,
     type Pharmacy,
     type Dosage,
+    getPatient,
   } from "../lib/api";
   import Empty from "./Empty.svelte";
   import { signData } from "../lib/crypto";
@@ -40,7 +41,8 @@
   let signatureFingerprint: string;
 
   async function load() {
-    drugs = (await getDrugs(patientId)) || [];
+    const patient = await getPatient(patientId);
+    drugs = (await getDrugs(patient.id!)) || [];
 
     if (!preferredDrugs.selected) {
       selectedDrugId = drugs[0].id!;
