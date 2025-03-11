@@ -35,16 +35,16 @@ export const getPatient = async (externalId: string) => {
         }
     });
 
-    if (!data?.patient) throw new Error(error?.message ?? 'Patient not found');
+    if (!data?.patients) throw new Error(error?.message ?? 'Patient not found');
 
-    return data?.patient as Patient;
+    return data?.patients[0] as Patient;
 };
 
-export const getDrugs = async (patientExternalId: string) => {
-    const { data } = await fetcher.GET('/v1/drugs', {
+export const getDrugs = async (patientId: string) => {
+    const { data } = await fetcher.GET('/v1/patients/{patientId}/drugs', {
         params: {
-            query: {
-                patientExternalId,
+            path: {
+                patientId,
             }
         }
     });
@@ -52,11 +52,14 @@ export const getDrugs = async (patientExternalId: string) => {
     return data?.drugs as Drug[];
 };
 
-export const getPharmacy = async (patientExternalId: string, drugId: string) => {
-    const { data } = await fetcher.GET('/v1/pharmacies', {
+export const getPharmacy = async (clinicId: string, patientId: string, drugId: string) => {
+    const { data } = await fetcher.GET('/v1/clinics/{clinicId}/patients/{patientId}/pharmacy', {
         params: {
+            path: {
+                clinicId,
+                patientId,
+            },
             query: {
-                patientExternalId,
                 drugId,
             }
         }

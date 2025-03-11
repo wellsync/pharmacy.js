@@ -4,6 +4,75 @@
  */
 
 export interface paths {
+    "/v1/billing-account/{clinicId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillingServices_GetAccountManagement"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinic/{clinicId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetClinic"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinician": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Returns the currently logged in clinician. This endpoint only works for
+         *      sessions authenticated using a careconnect.id account. */
+        get: operations["Pharmacy_GetCurrentClinician"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinician/private-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Sets the currently logged in clinician. This endpoint only works for
+         *      sessions authenticated using a careconnect.id account and can only be
+         *      called once during the initialization of the account. */
+        post: operations["Pharmacy_SetClinicianPrivateKey"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/clinicians": {
         parameters: {
             query?: never;
@@ -27,8 +96,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
+        get: operations["Pharmacy_GetClinician"];
+        put: operations["Pharmacy_UpdateClinician"];
         post?: never;
         delete: operations["Pharmacy_DeleteClinician"];
         options?: never;
@@ -49,6 +118,40 @@ export interface paths {
         post?: never;
         /** @description unlinks a clinician from a clinic by clinician_id and clinic_id */
         delete: operations["Pharmacy_UnlinkClinicClinician"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinicians/{clinicianId}/identity/recovery": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetClinicianIdentityRecoveryLink"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinicians/{clinicianId}/public-keys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description AddPublicKey adds a public key to a clinician */
+        get: operations["Pharmacy_GetPublicKeys"];
+        put?: never;
+        /** @description AddPublicKey adds a public key to a clinician */
+        post: operations["Pharmacy_AddPublicKey"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -78,7 +181,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
+        put: operations["Pharmacy_UpdateClinic"];
         post?: never;
         delete: operations["Pharmacy_DeleteClinic"];
         options?: never;
@@ -102,15 +205,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/drugs": {
+    "/v1/clinics/{clinicId}/drug_prices": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["Pharmacy_GetDrugs"];
-        put?: never;
+        get?: never;
+        put: operations["BillingServices_UpdateDrugPricesForClinic"];
         post?: never;
         delete?: never;
         options?: never;
@@ -118,23 +221,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/patients": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["Services_GetPatientByExternalID"];
-        put: operations["Services_Update"];
-        post: operations["Services_Create"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/pharmacies": {
+    "/v1/clinics/{clinicId}/patients/{patientId}/pharmacy": {
         parameters: {
             query?: never;
             header?: never;
@@ -150,7 +237,87 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/v1/prescription": {
+    "/v1/clinics/{clinicId}/patients/{patientId}/prescriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetPatientPrescriptions"];
+        put?: never;
+        post: operations["Pharmacy_SubmitPrescription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/clinics/{clinicId}/prescriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetPrescriptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/drugs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetAllDrugsAndDosages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/patients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Services_GetPatients"];
+        put?: never;
+        post: operations["Services_Create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/patients/{patientId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Services_Get"];
+        put: operations["Services_Update"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/patients/{patientId}/addresses": {
         parameters: {
             query?: never;
             header?: never;
@@ -159,7 +326,55 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["Pharmacy_SubmitPrescription"];
+        post: operations["Services_CreateAddressForTenant"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/patients/{patientId}/addresses/{addressId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["Services_ArchiveAddressForTenant"];
+        options?: never;
+        head?: never;
+        patch: operations["Services_UpdateAddressForTenant"];
+        trace?: never;
+    };
+    "/v1/patients/{patientId}/drugs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Pharmacy_GetDrugs"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/prices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillingServices_GetPricesForClinic"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -190,6 +405,35 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AddPublicKeyResponse: {
+            publicKey?: components["schemas"]["PublicKey"];
+        };
+        Address: {
+            id?: string;
+            /** @example 123 Main St */
+            addressLineOne?: string;
+            /** @example Apt 1 */
+            addressLineTwo?: string;
+            /** @example Tampa */
+            city?: string;
+            /** @example 12345 */
+            zip?: string;
+            /** @example FL */
+            administrativeArea?: string;
+            /** @example US */
+            country?: string;
+            archived?: boolean;
+            /** @description Description is an optional string that may be set by the user to describe the address (e.g. "home" or "office") */
+            description?: string;
+        };
+        AddressComponent: {
+            longName?: string;
+            shortName?: string;
+        };
+        ArchiveAddressForTenantResponse: Record<string, never>;
+        BillingServices_UpdateDrugPricesForClinicRequest: {
+            drugPrices?: components["schemas"]["DrugPrice"][];
+        };
         Clinic: {
             id?: string;
             tenantId?: string;
@@ -219,6 +463,24 @@ export interface components {
             dea?: string;
             /** Format: date-time */
             createdAt?: string;
+            /** @description The clinician's private key must be encrypted using the wrapper key following the recommended encryption standards.
+             *      The encrypted private key is only stored in the database, allowing the client to fetch the private key
+             *      and decrypt its content using the wrapper key when needing to sign messages. */
+            privateKey?: string;
+            /** @description The clinician encrypted wrapper key has to be encrypted following the recommended encryption standards
+             *      and encrypted on the client's device. The encrypted wrapper key is only stored in the database,
+             *      allowing the client to fetch the wrapper key and decrypt its content when needing to sign messages. */
+            wrapperKey?: string;
+            /** @description Recovery keys are randomly generated and used to encrypt the clinician's wrapper key.
+             *      These encrypted recovery keys are stored and can be used to recover the clinician's private key if access is lost. */
+            recoveryKeys?: string[];
+            /** @description Clinician email address. This email address is used for notifications and two-factor authentication. */
+            email?: string;
+            /** @description Clinician personal phone number. This phone number is used for notifications and two-factor authentication. */
+            phone?: string;
+        };
+        CreateAddressForTenantResponse: {
+            addressId?: string;
         };
         CreateClinicRequest: {
             clinic?: components["schemas"]["Clinic"];
@@ -228,9 +490,13 @@ export interface components {
         };
         CreateClinicianRequest: {
             clinician?: components["schemas"]["Clinician"];
+            clinicIds?: string[];
+            /** @description if set a identity account is created for the given clinician and a identity recovery link is returned */
+            createIdentity?: boolean;
         };
         CreateClinicianResponse: {
             clinician?: components["schemas"]["Clinician"];
+            identityRecovery?: components["schemas"]["IdentityRecovery"];
         };
         CreatePatientRequest: {
             patient?: components["schemas"]["Patient"];
@@ -238,13 +504,27 @@ export interface components {
         CreatePatientResponse: {
             patientId?: string;
         };
+        CreditCardFee: {
+            tenant?: string;
+            clinicId?: string;
+            /** Format: double */
+            feePercentage?: number;
+        };
         Dosage: {
+            id?: string;
             concentration?: string;
-            /** Format: float */
-            quantity?: number;
+            /** Format: int32 */
+            defaultQuantity?: number;
             /** Format: int32 */
             concentrationLvl?: number;
             directions?: string;
+            /** Format: int32 */
+            minQuantity?: number;
+            /** Format: int32 */
+            maxQuantity?: number;
+            /** Format: int32 */
+            quantityStep?: number;
+            shippingMethods?: ("SHIPPING_METHOD_UNSPECIFIED" | "SHIPPING_METHOD_STANDARD" | "SHIPPING_METHOD_OVERNIGHT" | "SHIPPING_METHOD_2DAY" | "SHIPPING_METHOD_3DAY")[];
         };
         Drug: {
             id?: string;
@@ -253,11 +533,37 @@ export interface components {
              * Format: enum
              * @enum {string}
              */
-            dosageForm?: "DOSAGE_FORM_UNSPECIFIED" | "DOSAGE_FORM_INJECTABLE" | "DOSAGE_FORM_ODT";
+            dosageForm?: "DOSAGE_FORM_UNSPECIFIED" | "DOSAGE_FORM_INJECTABLE" | "DOSAGE_FORM_ODT" | "DOSAGE_FORM_Tablet";
             dosages?: components["schemas"]["Dosage"][];
+            ndc?: string;
+        };
+        DrugPrice: {
+            tenant?: string;
+            clinicId?: string;
+            drugId?: string;
+            dosageId?: string;
+            /** Format: double */
+            price?: number;
+        };
+        GetAccountManagementResponse: {
+            hostedLoginToken?: string;
+            hasBillingInfo?: boolean;
+        };
+        GetAllDrugsAndDosagesResponse: {
+            drugs?: components["schemas"]["Drug"][];
         };
         GetClinicCliniciansResponse: {
             clinicians?: components["schemas"]["Clinician"][];
+        };
+        GetClinicResponse: {
+            clinic?: components["schemas"]["Clinic"];
+        };
+        GetClinicianIdentityRecoveryLinkResponse: {
+            identityRecovery?: components["schemas"]["IdentityRecovery"];
+        };
+        GetClinicianResponse: {
+            clinician?: components["schemas"]["Clinician"];
+            clinics?: components["schemas"]["Clinic"][];
         };
         GetCliniciansResponse: {
             clinicians?: components["schemas"]["Clinician"][];
@@ -265,14 +571,37 @@ export interface components {
         GetClinicsResponse: {
             clinics?: components["schemas"]["Clinic"][];
         };
+        GetCurrentClinicianResponse: {
+            clinician?: components["schemas"]["Clinician"];
+        };
         GetDrugsResponse: {
             drugs?: components["schemas"]["Drug"][];
         };
-        GetPatientByExternalIDResponse: {
-            patient?: components["schemas"]["Patient"];
+        GetPatientPrescriptionsResponse: {
+            prescriptions?: components["schemas"]["Prescription"][];
+            pagination?: components["schemas"]["PaginationResponse"];
+        };
+        GetPatientsResponse: {
+            patients?: components["schemas"]["Patient"][];
+            pagination?: components["schemas"]["PaginationResponse"];
         };
         GetPharmacyResponse: {
             pharmacy?: components["schemas"]["PharmacyDetails"];
+        };
+        GetPrescriptionsResponse: {
+            prescriptions?: components["schemas"]["Prescription"][];
+            pagination?: components["schemas"]["PaginationResponse"];
+        };
+        GetPricesForClinicResponse: {
+            drugPrices?: components["schemas"]["DrugPrice"][];
+            shippingFees?: components["schemas"]["ShippingFee"][];
+            creditCardFee?: components["schemas"]["CreditCardFee"];
+        };
+        GetPublicKeysResponse: {
+            publicKeys?: components["schemas"]["PublicKey"][];
+        };
+        GetResponse: {
+            patient?: components["schemas"]["Patient"];
         };
         /** @description Contains an arbitrary serialized message along with a @type that describes the type of the serialized message. */
         GoogleProtobufAny: {
@@ -292,6 +621,20 @@ export interface components {
             /** Format: float */
             inches?: number;
         };
+        IdentityRecovery: {
+            link?: string;
+            code?: string;
+            /** Format: date-time */
+            expiresAt?: string;
+        };
+        PaginationResponse: {
+            /** Format: uint32 */
+            size?: number;
+            /** Format: uint32 */
+            page?: number;
+            /** Format: uint32 */
+            total?: number;
+        };
         Patient: {
             /** @example 1234567890 */
             id?: string;
@@ -306,17 +649,35 @@ export interface components {
             firstName?: string;
             /** @example Doe */
             lastName?: string;
-            /** @example 123 Main St */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example 123 Main St
+             */
             addressLineOne?: string;
-            /** @example Apt 1 */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example Apt 1
+             */
             addressLineTwo?: string;
-            /** @example Tampa */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example Tampa
+             */
             city?: string;
-            /** @example 12345 */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example 12345
+             */
             zip?: string;
-            /** @example FL */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example FL
+             */
             administrativeArea?: string;
-            /** @example US */
+            /**
+             * @description DEPRECATED: refer to the primary address. Setting this value in an update will have no effect.
+             * @example US
+             */
             country?: string;
             /**
              * Format: date-time
@@ -328,6 +689,17 @@ export interface components {
             tenantId?: string;
             /** @example 123456 */
             externalId?: string;
+            /** @description All addresses for this patient. Read-only, setting this value in an update will have no effect. */
+            addresses?: components["schemas"]["Address"][];
+            /** @description The primary address ID for this patient. May be set in an update to change the primary address. */
+            primaryAddressId?: string;
+            /** @description The primary address (primary legal residence) for this patient. Read-only. */
+            primaryAddress?: components["schemas"]["Address"];
+            /** @example 00000000-0000-0000-0000-000000000000@patient.wellsync.io */
+            internalEmail?: string;
+            /** @description The sub-tenant ID for this patient it is used for sub-tenants
+             *      like a clinic for ola to prescribe prescriptions */
+            subTenantId?: string;
         };
         PatientProfile: {
             height?: components["schemas"]["Height"];
@@ -373,12 +745,137 @@ export interface components {
             name?: string;
             email?: string;
             phone?: string;
-            fax?: string;
+            country?: components["schemas"]["AddressComponent"];
+            administrativeArea?: components["schemas"]["AddressComponent"];
+            /** @example 35115 */
+            postalCode?: string;
+            /** @example 2056652575 */
             addressLineOne?: string;
+            /** @example Apt 1 */
             addressLineTwo?: string;
+            /** @example Tampa */
             city?: string;
-            administrativeArea?: string;
+            fax?: string;
             zip?: string;
+        };
+        Pharmacy_AddPublicKeyRequest: {
+            pem?: string;
+            alias?: string;
+        };
+        Pharmacy_SubmitPrescriptionRequest: {
+            externalCaseId?: string;
+            prescription?: components["schemas"]["Prescription"];
+        };
+        Pharmacy_UpdateClinicRequest: {
+            /** @example 123 Main St */
+            addressLineOne?: string;
+            /** @example Apt 1 */
+            addressLineTwo?: string;
+            /** @example Tampa */
+            city?: string;
+            /** @example 12345 */
+            zip?: string;
+            /** @example FL */
+            administrativeArea?: string;
+            /** @example US */
+            country?: string;
+            /** @example 1234567890 */
+            phone?: string;
+            /**
+             * @description The name of the clinic
+             * @example Tampa General Hospital
+             */
+            name?: string;
+        };
+        Pharmacy_UpdateClinicianRequest: {
+            firstName?: string;
+            lastName?: string;
+            npi?: string;
+            dea?: string;
+        };
+        /** @example {
+         *       "id": "26380057-2f6c-4e1a-a001-eac7133f27c1",
+         *       "patient_id": "26380057-2f6c-4e1a-a001-eac7133f27c1",
+         *       "pharmacy_id": "perfectrx",
+         *       "drug_id": "semaglutide-compound",
+         *       "clinic_id": "26380057-2f6c-4e1a-a001-eac7133f27c1",
+         *       "clinician_id": "26380057-2f6c-4e1a-a001-eac7133f27c1",
+         *       "dosage_id": "semaglutide-compound-1mg/ml",
+         *       "directions": "Take 1 pill daily"
+         *     } */
+        Prescription: {
+            id?: string;
+            patientId?: string;
+            pharmacyId?: string;
+            drugId?: string;
+            dosageId?: string;
+            clinicId?: string;
+            clinicianId?: string;
+            externalCaseId?: string;
+            /**
+             * Format: enum
+             * @enum {string}
+             */
+            status?: "PRESCRIPTION_STATUS_UNSPECIFIED" | "PRESCRIPTION_STATUS_RECEIVED" | "PRESCRIPTION_STATUS_SHIPPED" | "PRESCRIPTION_STATUS_DELIVERED" | "PRESCRIPTION_STATUS_CANCELLED" | "PRESCRIPTION_STATUS_QUEUED" | "PRESCRIPTION_STATUS_UNKNOWN";
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            /** @description details for the prescription from other normalized tables */
+            drugName?: string;
+            patientName?: string;
+            patientDob?: string;
+            pharmacyName?: string;
+            directions?: string;
+            /** Format: int32 */
+            quantity?: number;
+            /**
+             * Format: uint32
+             * @description drug count
+             */
+            drugCount?: number;
+            /**
+             * Format: enum
+             * @description shipping details
+             * @enum {string}
+             */
+            shippingMethod?: "SHIPPING_METHOD_UNSPECIFIED" | "SHIPPING_METHOD_STANDARD" | "SHIPPING_METHOD_OVERNIGHT" | "SHIPPING_METHOD_2DAY" | "SHIPPING_METHOD_3DAY";
+        };
+        PublicKey: {
+            id?: string;
+            tenant: string;
+            clinicianId: string;
+            pem?: string;
+            alias: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            deletedAt?: string;
+        };
+        Services_CreateAddressForTenantRequest: {
+            address?: components["schemas"]["Address"];
+        };
+        Services_UpdateAddressForTenantRequest: {
+            address?: components["schemas"]["Address"];
+        };
+        Services_UpdateRequest: {
+            patient?: components["schemas"]["Patient"];
+        };
+        SetClinicianPrivateKeyRequest: {
+            encryptedPrivateKey?: string;
+            encryptedWrapperKey?: string;
+            encryptedRecoveryKeys?: string[];
+            publicKey?: string;
+        };
+        SetClinicianPrivateKeyResponse: {
+            clinician?: components["schemas"]["Clinician"];
+        };
+        ShippingFee: {
+            tenant?: string;
+            clinicId?: string;
+            shippingMethod?: string;
+            /** Format: double */
+            feeAmount?: number;
         };
         /** @description The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). */
         Status: {
@@ -392,12 +889,18 @@ export interface components {
             /** @description A list of messages that carry the error details.  There is a common set of message types for APIs to use. */
             details?: components["schemas"]["GoogleProtobufAny"][];
         };
-        SubmitPrescriptionRequest: Record<string, never>;
-        SubmitPrescriptionResponse: Record<string, never>;
-        UpdatePatientRequest: {
-            patient?: components["schemas"]["Patient"];
+        SubmitPrescriptionResponse: {
+            prescription?: components["schemas"]["Prescription"];
         };
-        UpdatePatientResponse: {
+        UpdateAddressForTenantResponse: Record<string, never>;
+        UpdateClinicResponse: {
+            clinic?: components["schemas"]["Clinic"];
+        };
+        UpdateClinicianResponse: {
+            clinician?: components["schemas"]["Clinician"];
+        };
+        UpdateDrugPricesForClinicResponse: Record<string, never>;
+        UpdatePatientForTenantResponse: {
             patient?: components["schemas"]["Patient"];
         };
         Weight: {
@@ -442,9 +945,138 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    Pharmacy_GetClinicians: {
+    BillingServices_GetAccountManagement: {
         parameters: {
             query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetAccountManagementResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetClinic: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetClinicResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetCurrentClinician: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetCurrentClinicianResponse"];
+                };
+            };
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_SetClinicianPrivateKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetClinicianPrivateKeyRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SetClinicianPrivateKeyResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetClinicians: {
+        parameters: {
+            query?: {
+                query?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -492,6 +1124,73 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CreateClinicianResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetClinician: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicianId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetClinicianResponse"];
+                };
+            };
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_UpdateClinician: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicianId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Pharmacy_UpdateClinicianRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpdateClinicianResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -603,9 +1302,112 @@ export interface operations {
             };
         };
     };
-    Pharmacy_GetClinics: {
+    Pharmacy_GetClinicianIdentityRecoveryLink: {
         parameters: {
             query?: never;
+            header?: never;
+            path: {
+                clinicianId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetClinicianIdentityRecoveryLinkResponse"];
+                };
+            };
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetPublicKeys: {
+        parameters: {
+            query?: {
+                activeOnly?: boolean;
+            };
+            header?: never;
+            path: {
+                clinicianId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetPublicKeysResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_AddPublicKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicianId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Pharmacy_AddPublicKeyRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddPublicKeyResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetClinics: {
+        parameters: {
+            query?: {
+                query?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -667,6 +1469,42 @@ export interface operations {
             };
         };
     };
+    Pharmacy_UpdateClinic: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Pharmacy_UpdateClinicRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpdateClinicResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
     Pharmacy_DeleteClinic: {
         parameters: {
             query?: never;
@@ -700,7 +1538,9 @@ export interface operations {
     };
     Pharmacy_GetClinicClinicians: {
         parameters: {
-            query?: never;
+            query?: {
+                query?: string;
+            };
             header?: never;
             path: {
                 clinicId: string;
@@ -730,16 +1570,20 @@ export interface operations {
             };
         };
     };
-    Pharmacy_GetDrugs: {
+    BillingServices_UpdateDrugPricesForClinic: {
         parameters: {
-            query?: {
-                patientExternalId?: string;
-            };
+            query?: never;
             header?: never;
-            path?: never;
+            path: {
+                clinicId: string;
+            };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingServices_UpdateDrugPricesForClinicRequest"];
+            };
+        };
         responses: {
             /** @description OK */
             200: {
@@ -747,7 +1591,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GetDrugsResponse"];
+                    "application/json": components["schemas"]["UpdateDrugPricesForClinicResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -762,10 +1606,197 @@ export interface operations {
             };
         };
     };
-    Services_GetPatientByExternalID: {
+    Pharmacy_GetPharmacy: {
+        parameters: {
+            query?: {
+                drugId?: string;
+            };
+            header?: never;
+            path: {
+                clinicId: string;
+                patientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetPharmacyResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetPatientPrescriptions: {
+        parameters: {
+            query?: {
+                externalCaseId?: string;
+                /** @description with_details will return the full prescription details
+                 *      including patient and drug details */
+                withDetails?: boolean;
+                "pagination.size"?: number;
+                "pagination.page"?: number;
+            };
+            header?: never;
+            path: {
+                clinicId: string;
+                patientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetPatientPrescriptionsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_SubmitPrescription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+                patientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Pharmacy_SubmitPrescriptionRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubmitPrescriptionResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetPrescriptions: {
+        parameters: {
+            query?: {
+                externalPatientId?: string;
+                externalCaseId?: string;
+                /** @description with_details will return the full prescription details
+                 *      including patient and drug details */
+                withDetails?: boolean;
+                "pagination.size"?: number;
+                "pagination.page"?: number;
+            };
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetPrescriptionsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetAllDrugsAndDosages: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetAllDrugsAndDosagesResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Services_GetPatients: {
         parameters: {
             query?: {
                 externalId?: string;
+                subTenantId?: string;
+                id?: string;
+                "pagination.size"?: number;
+                "pagination.page"?: number;
+                query?: string;
             };
             header?: never;
             path?: never;
@@ -779,40 +1810,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GetPatientByExternalIDResponse"];
-                };
-            };
-            /** @description Default error response */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Status"];
-                };
-            };
-        };
-    };
-    Services_Update: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UpdatePatientRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UpdatePatientResponse"];
+                    "application/json": components["schemas"]["GetPatientsResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -861,14 +1859,13 @@ export interface operations {
             };
         };
     };
-    Pharmacy_GetPharmacy: {
+    Services_Get: {
         parameters: {
-            query?: {
-                drugId?: string;
-                patientExternalId?: string;
-            };
+            query?: never;
             header?: never;
-            path?: never;
+            path: {
+                patientId: string;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -879,7 +1876,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["GetPharmacyResponse"];
+                    "application/json": components["schemas"]["GetResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
@@ -894,16 +1891,18 @@ export interface operations {
             };
         };
     };
-    Pharmacy_SubmitPrescription: {
+    Services_Update: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                patientId: string;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SubmitPrescriptionRequest"];
+                "application/json": components["schemas"]["Services_UpdateRequest"];
             };
         };
         responses: {
@@ -913,7 +1912,177 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["SubmitPrescriptionResponse"];
+                    "application/json": components["schemas"]["UpdatePatientForTenantResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Services_CreateAddressForTenant: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                patientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Services_CreateAddressForTenantRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateAddressForTenantResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Services_ArchiveAddressForTenant: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                patientId: string;
+                addressId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArchiveAddressForTenantResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Services_UpdateAddressForTenant: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                patientId: string;
+                addressId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Services_UpdateAddressForTenantRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpdateAddressForTenantResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    Pharmacy_GetDrugs: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                patientId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetDrugsResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    BillingServices_GetPricesForClinic: {
+        parameters: {
+            query?: {
+                clinicId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetPricesForClinicResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
