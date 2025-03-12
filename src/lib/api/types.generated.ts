@@ -426,10 +426,6 @@ export interface components {
             /** @description Description is an optional string that may be set by the user to describe the address (e.g. "home" or "office") */
             description?: string;
         };
-        AddressComponent: {
-            longName?: string;
-            shortName?: string;
-        };
         ArchiveAddressForTenantResponse: Record<string, never>;
         BillingServices_UpdateDrugPricesForClinicRequest: {
             drugPrices?: components["schemas"]["DrugPrice"][];
@@ -586,7 +582,7 @@ export interface components {
             pagination?: components["schemas"]["PaginationResponse"];
         };
         GetPharmacyResponse: {
-            pharmacy?: components["schemas"]["PharmacyDetails"];
+            pharmacy?: components["schemas"]["PharmacyContactInfo"];
         };
         GetPrescriptionsResponse: {
             prescriptions?: components["schemas"]["Prescription"][];
@@ -740,22 +736,16 @@ export interface components {
              */
             sexAtBirth?: "SEX_MALE" | "SEX_FEMALE" | "SEX_INTERSEX";
         };
-        PharmacyDetails: {
+        PharmacyContactInfo: {
             id?: string;
             name?: string;
             email?: string;
             phone?: string;
-            country?: components["schemas"]["AddressComponent"];
-            administrativeArea?: components["schemas"]["AddressComponent"];
-            /** @example 35115 */
-            postalCode?: string;
-            /** @example 2056652575 */
-            addressLineOne?: string;
-            /** @example Apt 1 */
-            addressLineTwo?: string;
-            /** @example Tampa */
-            city?: string;
             fax?: string;
+            addressLineOne?: string;
+            addressLineTwo?: string;
+            city?: string;
+            administrativeArea?: string;
             zip?: string;
         };
         Pharmacy_AddPublicKeyRequest: {
@@ -1407,6 +1397,7 @@ export interface operations {
         parameters: {
             query?: {
                 query?: string;
+                externalId?: string;
             };
             header?: never;
             path?: never;
