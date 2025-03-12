@@ -15,6 +15,7 @@
   import { signData } from "../lib/crypto";
 
   export let caseId: string;
+  export let clinicId: string;
   export let patientId: string;
   export let clinicianId: string;
 
@@ -93,7 +94,7 @@
 
   async function fetchPharmacy() {
     pharmacyError = "";
-    pharmacy = (await getPharmacy(patientId, selectedDrugId)) ?? null;
+    pharmacy = (await getPharmacy(clinicId, patientId, selectedDrugId)) ?? null;
     if (!pharmacy) {
       pharmacyError =
         "We were unable to find a mail order pharmacy for the given patient and selected medication";

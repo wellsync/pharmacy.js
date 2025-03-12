@@ -1,8 +1,18 @@
 <script lang="ts">
+  import "@iframe-resizer/child";
+
+  import PatientComponent from "./components/Patient.svelte";
+  import PrescriptionComponent from "./components/Prescription.svelte";
+  import { getPatient, getClinic, type Patient, type Clinic } from "./lib/api";
+
   const params = new URLSearchParams(window.location.search);
 
+  let patient: Patient | undefined;
+  let clinic: Clinic | undefined;
+
+  const externalClinicId = params.get("clinic") || "";
   const caseId = params.get("case") || "";
-  const patient = params.get("patient") || "";
+  const externalPatientId = params.get("patient") || "";
   const clinician = params.get("clinician") || "";
 
   const drugs = {
@@ -12,31 +22,33 @@
     selected: (params.get("drugs.selected") || "").split(","),
   };
 
-  import "@iframe-resizer/child";
+  async function load() {
+    patient = await getPatient(externalPatientId);
+    clinic = await getClinic(externalClinicId);
+  }
 
-  import Patient from "./components/Patient.svelte";
-  import Prescription from "./components/Prescription.svelte";
+  load();
 </script>
 
-<main>
-  <form class="max-w-3xl m-auto grid gap-y-6">
-    <section>
-      <div class="w-1/12">
-        <a href="https://wellsync.com" target="_blank">
-          <img src="/logo.svg" alt="WellSync" class="rounded-md w-full" />
-        </a>
-      </div>
-      <Patient id={patient} />
-    </section>
+{#if patient?.id && clinic?.id}
+  <main>
+    <form class="max-w-3xl m-auto grid gap-y-6">
+      <section>
+        <div class="w-1/12">
+          <a href="https://wellsync.com" target="_blank">
+            <img src="/logo.svg" alt="WellSync" class="rounded-md w-full" />
+          </a>
+        </div>
+        <PatientComponent {patient} />
+      </section>
 
-    <Prescription
-      {caseId}
-      patientId={patient}
-      clinicianId={clinician}
-      preferredDrugs={drugs}
-    />
-  </form>
-</main>
-
-<style lang="postcss">
-</style>
+      <PrescriptionComponent
+        {caseId}
+        clinicId={clinic.id}
+        patientId={patient.id}
+        clinicianId={clinician}
+        preferredDrugs={drugs}
+      />
+    </form>
+  </main>
+{/if}
