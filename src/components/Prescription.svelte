@@ -16,8 +16,9 @@
 
   export let caseId: string;
   export let clinicId: string;
+  export let patientExternalId: string;
   export let patientId: string;
-  export let clinicianId: string;
+  export let clinicianExternalId: string;
 
   type PreferredDrugs = {
     message: string;
@@ -43,7 +44,7 @@
   async function load() {
     drugs = (await getDrugs(patientId)) || [];
 
-    if (!preferredDrugs.selected) {
+    if (!selectedDrugId) {
       selectedDrugId = drugs[0].id!;
     }
 
@@ -54,12 +55,12 @@
     loading = true;
 
     const msg = JSON.stringify({
-      patientId,
-      clinicianId,
+      clinicianId: clinicianExternalId,
       drugId: selectedDrugId,
       dosage: selectedDosageConcentration,
       directions: prescriptionDirections,
       date: new Date().toISOString(),
+      patientId: patientExternalId,
     });
 
     const { signature, fingerprint } = await signData(msg);
