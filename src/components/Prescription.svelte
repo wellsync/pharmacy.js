@@ -5,19 +5,22 @@
   import Button from "./Button.svelte";
 
   import {
-    getDrugs,
-    getPharmacy,
+    type Dosage,
     type Drug,
     type Pharmacy,
-    type Dosage,
+    type Prescription,
+    getDrugs,
+    getPharmacy,
+    submitPrescription,
   } from "../lib/api";
   import Empty from "./Empty.svelte";
   import { signData } from "../lib/crypto";
 
-  export let caseId: string;
+  export let caseExternalId: string;
   export let clinicId: string;
+  export let patientExternalId: string;
   export let patientId: string;
-  export let clinicianId: string;
+  export let clinicianExternalId: string;
 
   type PreferredDrugs = {
     message: string;
@@ -33,17 +36,18 @@
   let dosages: Dosage[] = [];
 
   let selectedDrugId: string = preferredDrugs?.selected[0] ?? null;
-  let selectedDosageConcentration: string;
+  let selectedDosageId: string;
   let prescriptionDirections: string;
   let pharmacy: Pharmacy | null;
   let pharmacyError: string;
+  let submissionError: string;
 
   let signatureFingerprint: string;
 
   async function load() {
     drugs = (await getDrugs(patientId)) || [];
 
-    if (!preferredDrugs.selected) {
+    if (!selectedDrugId) {
       selectedDrugId = drugs[0].id!;
     }
 
@@ -53,21 +57,45 @@
   async function submission() {
     loading = true;
 
-    const msg = JSON.stringify({
-      patientId,
-      clinicianId,
+    const prescription: Prescription = {
+      clinicianId: clinicianExternalId,
       drugId: selectedDrugId,
-      dosage: selectedDosageConcentration,
+      dosageId: selectedDosageId,
       directions: prescriptionDirections,
-      date: new Date().toISOString(),
-    });
+      patientId: patientExternalId,
+    };
 
-    const { signature, fingerprint } = await signData(msg);
-    console.log(signature, fingerprint);
+    const message = JSON.stringify(prescription);
+
+    let fingerprint = '';
+    let signature = '';
+    try {
+      const signResponse = await signData(message);
+      fingerprint = signResponse.fingerprint;
+      signature = signResponse.signature;
+    } catch {
+      submissionError = "A valid signature could not be retrieved for the prescription.";
+      loading = false;
+      return;
+    }
+
+    try {
+      await submitPrescription({
+        clinicId,
+        patientId,
+        externalCaseId: caseExternalId,
+        prescription,
+        message,
+        signature
+      });
+    } catch {
+      submissionError = "The prescription could not be submitted.";
+      loading = false;
+      return;
+    }
 
     signatureFingerprint = fingerprint;
     submitted = true;
-    loading = false;
   }
 
   $: drugOptions = drugs.map((drug) => ({
@@ -82,12 +110,12 @@
       return left.concentrationLvl! - right.concentrationLvl!;
     })
     .map((dosage) => ({
-      id: dosage.concentration!,
+      id: dosage.id!,
       value: dosage.concentration!,
     }));
 
   $: dosage = dosages.find(
-    (dosage) => dosage.concentration == selectedDosageConcentration
+    (dosage) => dosage.concentration == selectedDosageId
   );
 
   $: prescriptionDirections = dosage?.directions ?? "";
@@ -133,7 +161,7 @@
         <div class="mt-2 grid grid-cols-1">
           <Select
             options={dosageOptions}
-            bind:value={selectedDosageConcentration}
+            bind:value={selectedDosageId}
           />
         </div>
       </div>
@@ -249,6 +277,15 @@
     </dl>
   {/if}
 </section>
+
+{#if submissionError}
+  <div class="mt-4">
+    <Alert
+      message="{submissionError}. If you think this is a bug please contact support@wellsync.com"
+      type="error"
+    />
+  </div>
+{/if}
 
 <div class="mt-2">
   {#if !submitted}

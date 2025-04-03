@@ -10,10 +10,10 @@
   let patient: Patient | undefined;
   let clinic: Clinic | undefined;
 
-  const externalClinicId = params.get("clinic") || "";
-  const caseId = params.get("case") || "";
-  const externalPatientId = params.get("patient") || "";
-  const clinician = params.get("clinician") || "";
+  const caseExternalId = params.get("case") || "";
+  const clinicExternalId = params.get("clinic") || "";
+  const clinicianExternalId = params.get("clinician") || "";
+  const patientExternalId = params.get("patient") || "";
 
   const drugs = {
     message:
@@ -23,8 +23,8 @@
   };
 
   async function load() {
-    patient = await getPatient(externalPatientId);
-    clinic = await getClinic(externalClinicId);
+    patient = await getPatient(patientExternalId);
+    clinic = await getClinic(clinicExternalId);
   }
 
   load();
@@ -43,10 +43,11 @@
       </section>
 
       <PrescriptionComponent
-        {caseId}
+        {caseExternalId}
         clinicId={clinic.id}
+        {clinicianExternalId}
+        {patientExternalId}
         patientId={patient.id}
-        clinicianId={clinician}
         preferredDrugs={drugs}
       />
     </form>
