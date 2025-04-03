@@ -10,7 +10,7 @@
   let patient: Patient | undefined;
   let clinic: Clinic | undefined;
 
-  const caseId = params.get("case") || "";
+  const caseExternalId = params.get("case") || "";
   const clinicExternalId = params.get("clinic") || "";
   const clinicianExternalId = params.get("clinician") || "";
   const patientExternalId = params.get("patient") || "";
@@ -43,7 +43,7 @@
       </section>
 
       <PrescriptionComponent
-        {caseId}
+        {caseExternalId}
         clinicId={clinic.id}
         {clinicianExternalId}
         {patientExternalId}
