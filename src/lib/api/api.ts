@@ -2,6 +2,7 @@ import createClient from 'openapi-fetch';
 import type { components, operations, paths } from './types.generated';
 
 export type Clinic = components['schemas']['Clinic'];
+export type Clinician = components['schemas']['Clinician'];
 export type Dosage = components['schemas']['Dosage'];
 export type Drug = components['schemas']['Drug'];
 export type Patient = components['schemas']['Patient'];
@@ -54,6 +55,21 @@ export const getClinic = async (externalId: string) => {
   if (!data?.clinics) throw new Error(error?.message ?? 'Clinic not found');
 
   return data?.clinics[0] as Patient;
+};
+
+export const getClinician = async (externalId: string) => {
+  const { data, error } = await fetcher.GET('/v1/clinicians', {
+    params: {
+      query: {
+        externalId,
+      },
+    },
+  });
+
+  if (!data?.clinicians)
+    throw new Error(error?.message ?? 'Clinician not found');
+
+  return data?.clinicians[0] as Clinician;
 };
 
 export const getDrugs = async (patientId: string) => {

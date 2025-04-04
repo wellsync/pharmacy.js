@@ -3,12 +3,20 @@
 
   import PatientComponent from "./components/Patient.svelte";
   import PrescriptionComponent from "./components/Prescription.svelte";
-  import { getPatient, getClinic, type Patient, type Clinic } from "./lib/api";
+  import {
+    getClinic,
+    getClinician,
+    getPatient,
+    type Clinic,
+    type Clinician,
+    type Patient,
+  } from "./lib/api";
 
   const params = new URLSearchParams(window.location.search);
 
-  let patient: Patient | undefined;
   let clinic: Clinic | undefined;
+  let clinician: Clinician | undefined;
+  let patient: Patient | undefined;
 
   const caseExternalId = params.get("case") || "";
   const clinicExternalId = params.get("clinic") || "";
@@ -24,13 +32,14 @@
 
   async function load() {
     patient = await getPatient(patientExternalId);
+    clinician = await getClinician(clinicianExternalId);
     clinic = await getClinic(clinicExternalId);
   }
 
   load();
 </script>
 
-{#if patient?.id && clinic?.id}
+{#if patient?.id && clinic?.id && clinician?.id}
   <main>
     <form class="max-w-3xl m-auto grid gap-y-6">
       <section>
@@ -45,8 +54,7 @@
       <PrescriptionComponent
         {caseExternalId}
         clinicId={clinic.id}
-        {clinicianExternalId}
-        {patientExternalId}
+        clinicianId={clinician.id}
         patientId={patient.id}
         preferredDrugs={drugs}
       />

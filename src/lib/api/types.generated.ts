@@ -269,6 +269,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/clinics/{clinicId}/tier": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillingServices_GetClinicTier"];
+        put: operations["BillingServices_SetClinicTier"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/drugs": {
         parameters: {
             query?: never;
@@ -381,6 +397,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/tiers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillingServices_GetTiers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/sessions": {
         parameters: {
             query?: never;
@@ -427,6 +459,9 @@ export interface components {
             description?: string;
         };
         ArchiveAddressForTenantResponse: Record<string, never>;
+        BillingServices_SetClinicTierRequest: {
+            tier?: string;
+        };
         BillingServices_UpdateDrugPricesForClinicRequest: {
             drugPrices?: components["schemas"]["DrugPrice"][];
         };
@@ -540,6 +575,7 @@ export interface components {
             dosageId?: string;
             /** Format: double */
             price?: number;
+            tier?: string;
         };
         GetAccountManagementResponse: {
             hostedLoginToken?: string;
@@ -553,6 +589,9 @@ export interface components {
         };
         GetClinicResponse: {
             clinic?: components["schemas"]["Clinic"];
+        };
+        GetClinicTierResponse: {
+            tier?: string;
         };
         GetClinicianIdentityRecoveryLinkResponse: {
             identityRecovery?: components["schemas"]["IdentityRecovery"];
@@ -598,6 +637,9 @@ export interface components {
         };
         GetResponse: {
             patient?: components["schemas"]["Patient"];
+        };
+        GetTiersResponse: {
+            tiers?: string[];
         };
         /** @description Contains an arbitrary serialized message along with a @type that describes the type of the serialized message. */
         GoogleProtobufAny: {
@@ -820,11 +862,6 @@ export interface components {
             /** Format: int32 */
             quantity?: number;
             /**
-             * Format: uint32
-             * @description drug count
-             */
-            drugCount?: number;
-            /**
              * Format: enum
              * @description shipping details
              * @enum {string}
@@ -851,6 +888,7 @@ export interface components {
         Services_UpdateRequest: {
             patient?: components["schemas"]["Patient"];
         };
+        SetClinicTierResponse: Record<string, never>;
         SetClinicianPrivateKeyRequest: {
             encryptedPrivateKey?: string;
             encryptedWrapperKey?: string;
@@ -1066,6 +1104,7 @@ export interface operations {
         parameters: {
             query?: {
                 query?: string;
+                externalId?: string;
             };
             header?: never;
             path?: never;
@@ -1749,6 +1788,74 @@ export interface operations {
             };
         };
     };
+    BillingServices_GetClinicTier: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetClinicTierResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    BillingServices_SetClinicTier: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                clinicId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingServices_SetClinicTierRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SetClinicTierResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
     Pharmacy_GetAllDrugsAndDosages: {
         parameters: {
             query?: never;
@@ -2074,6 +2181,36 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GetPricesForClinicResponse"];
+                };
+            };
+            400: components["responses"]["BadRequest"];
+            /** @description Default error response */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Status"];
+                };
+            };
+        };
+    };
+    BillingServices_GetTiers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GetTiersResponse"];
                 };
             };
             400: components["responses"]["BadRequest"];
