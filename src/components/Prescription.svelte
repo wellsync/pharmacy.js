@@ -18,9 +18,8 @@
 
   export let caseExternalId: string;
   export let clinicId: string;
-  export let patientExternalId: string;
+  export let clinicianId: string;
   export let patientId: string;
-  export let clinicianExternalId: string;
 
   type PreferredDrugs = {
     message: string;
@@ -58,11 +57,11 @@
     loading = true;
 
     const prescription: Prescription = {
-      clinicianId: clinicianExternalId,
+      clinicianId,
       drugId: selectedDrugId,
       dosageId: selectedDosageId,
       directions: prescriptionDirections,
-      patientId: patientExternalId,
+      patientId,
     };
 
     const message = JSON.stringify(prescription);
