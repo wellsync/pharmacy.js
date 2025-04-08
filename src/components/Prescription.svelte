@@ -114,7 +114,7 @@
     }));
 
   $: dosage = dosages.find(
-    (dosage) => dosage.concentration == selectedDosageId
+    (dosage) => dosage.id == selectedDosageId
   );
 
   $: prescriptionDirections = dosage?.directions ?? "";
