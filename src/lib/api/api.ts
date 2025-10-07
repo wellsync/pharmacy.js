@@ -24,7 +24,10 @@ const fetcher = createClient<paths>({ baseUrl: environment });
 
 fetcher.use({
   onRequest: async ({ request }) => {
-    request.headers.set('Authorization', 'Bearer super-secret-key');
+    request.headers.set(
+      'Authorization',
+      `Bearer ${params.get('session') || 'super-secret-key'}`
+    );
     return request;
   },
 });
