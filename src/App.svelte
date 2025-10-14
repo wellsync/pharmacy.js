@@ -31,9 +31,9 @@
   };
 
   async function load() {
-    patient = await getPatient(patientExternalId);
-    clinician = await getClinician(clinicianExternalId);
-    clinic = await getClinic(clinicExternalId);
+    patient = await getPatient({ externalId: patientExternalId });
+    clinician = await getClinician({ externalId: clinicianExternalId });
+    clinic = await getClinic({ externalId: clinicExternalId });
   }
 
   load();
