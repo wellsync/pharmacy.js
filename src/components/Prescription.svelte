@@ -44,7 +44,7 @@
   let signatureFingerprint: string;
 
   async function load() {
-    drugs = (await getDrugs(patientId)) || [];
+    drugs = (await getDrugs({ patientId })) || [];
 
     if (!selectedDrugId) {
       selectedDrugId = drugs[0].id!;
@@ -105,9 +105,7 @@
   $: dosages = drugs.find((drug) => drug.id == selectedDrugId)?.dosages || [];
 
   $: dosageOptions = dosages
-    .sort((left, right): number => {
-      return left.concentrationLvl! - right.concentrationLvl!;
-    })
+    .sort((left, right) => left.concentrationLvl! - right.concentrationLvl!)
     .map((dosage) => ({
       id: dosage.id!,
       value: dosage.concentration!,
@@ -121,12 +119,19 @@
 
   async function fetchPharmacy() {
     pharmacyError = "";
-    pharmacy = (await getPharmacy(clinicId, patientId, selectedDrugId)) ?? null;
-    if (!pharmacy) {
-      pharmacyError =
-        "We were unable to find a mail order pharmacy for the given patient and selected medication";
+    if (selectedDrugId && selectedDosageId) {
+      pharmacy = (await getPharmacy({
+        clinicId,
+        patientId,
+        drugId: selectedDrugId,
+        dosageId: selectedDosageId
+      })) ?? null;
+      if (!pharmacy) {
+        pharmacyError =
+          "We were unable to find a mail order pharmacy for the given patient and selected medication";
+      }
+      // TODO: show error if no pharmacy is found
     }
-    // TODO: show error if no pharmacy is found
   }
 
   load();
@@ -161,6 +166,7 @@
           <Select
             options={dosageOptions}
             bind:value={selectedDosageId}
+            on:change={fetchPharmacy}
           />
         </div>
       </div>

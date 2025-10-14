@@ -32,7 +32,9 @@ fetcher.use({
   },
 });
 
-export const getPatient = async (externalId: string) => {
+export const getPatient = async ({
+  externalId,
+}: NonNullable<operations['Services_GetPatients']['parameters']['query']>) => {
   const { data, error } = await fetcher.GET('/v1/patients', {
     params: {
       query: {
@@ -46,7 +48,9 @@ export const getPatient = async (externalId: string) => {
   return data?.patients[0] as Patient;
 };
 
-export const getClinic = async (externalId: string) => {
+export const getClinic = async ({
+  externalId,
+}: NonNullable<operations['Pharmacy_GetClinics']['parameters']['query']>) => {
   const { data, error } = await fetcher.GET('/v1/clinics', {
     params: {
       query: {
@@ -60,7 +64,11 @@ export const getClinic = async (externalId: string) => {
   return data?.clinics[0] as Patient;
 };
 
-export const getClinician = async (externalId: string) => {
+export const getClinician = async ({
+  externalId,
+}: NonNullable<
+  operations['Pharmacy_GetClinicians']['parameters']['query']
+>) => {
   const { data, error } = await fetcher.GET('/v1/clinicians', {
     params: {
       query: {
@@ -75,7 +83,9 @@ export const getClinician = async (externalId: string) => {
   return data?.clinicians[0] as Clinician;
 };
 
-export const getDrugs = async (patientId: string) => {
+export const getDrugs = async ({
+  patientId,
+}: operations['Pharmacy_GetDrugs']['parameters']['path']) => {
   const { data } = await fetcher.GET('/v1/patients/{patientId}/drugs', {
     params: {
       path: {
@@ -87,11 +97,15 @@ export const getDrugs = async (patientId: string) => {
   return data?.drugs as Drug[];
 };
 
-export const getPharmacy = async (
-  clinicId: string,
-  patientId: string,
-  drugId: string
-) => {
+export const getPharmacy = async ({
+  clinicId,
+  patientId,
+  drugId,
+  dosageId,
+}: operations['Pharmacy_GetPharmacyByDrug']['parameters']['path'] &
+  Required<
+    operations['Pharmacy_GetPharmacyByDrug']['parameters']['query']
+  >) => {
   const { data } = await fetcher.GET(
     '/v1/clinics/{clinicId}/patients/{patientId}/pharmacy',
     {
@@ -102,6 +116,7 @@ export const getPharmacy = async (
         },
         query: {
           drugId,
+          dosageId,
         },
       },
     }
