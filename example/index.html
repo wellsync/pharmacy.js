@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pharmacy.js Minimal Example</title>
+    <script
+      src="https://pharmacy.js.wellsync.io/client.js"
+      type="application/javascript"
+    ></script>
+  </head>
+  <body>
+    <h1>Pharmacy.js Example</h1>
+    <div id="order"></div>
+
+    <script>
+      async function createSession(apiKey, environment) {
+        if (!["stg", "dev", "prd"].includes(environment)) {
+          throw new Error("Invalid environment: " + environment);
+        }
+        const baseUrl = `https://services.careconnect.${environment}.wellsync.io`;
+        const response = await fetch(baseUrl + "/v1/sessions", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + apiKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create session (" + response.status + ")");
+        }
+
+        const data = await response.json();
+        return data.access_token;
+      }
+
+      async function initPharmacyOrder() {
+        const environment = "stg";
+        const apiKey = "super-secret-key";
+        const session = await createSession(apiKey, environment);
+        const privateKey = `-----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9E3KuGj9ER08s
+      1Gk6SXIEQftSRIeA37a0olHIUi4L0tC7dbU5Hq174Xwx3NVyUUsoW4Alvo0RNyux
+      WsEGD1wNdTgobcqzzv/3YKjEcoufFDvcCosn1w5v5BXGqi6FZ71fEAyBwf/hl3fC
+      EoFcmqhNGihv145FA6ubn0Q/PvgFcwQ7w/+SOdYeTB6hbGGLcQIQGu2Ng4klGatM
+      9YyfY1hTDEXq6T5lnBKMRmpeWAAvQFXQ+mhoWhg/PUvaq/6RufLrrH66ua/CEBHa
+      n2GGSAkOrudepRZmG6yFzCyBbv/q4MWhk8lSYYG6Nb5av+7GIVvZSmnXwNJPtD1R
+      oWi7wGOZAgMBAAECggEAFcv2x9+efMVwORGtJlMmddtx6Lpd+SNBJaqDPVHM/V+y
+      oLO5fjHdS8dTKQ/lWuIIhSjkOWWxz0LiEnZtA2D0qpgBbva2PBuQSlE+L3RpiF+d
+      pXihMWjzQP6lLIN8rLQognugB3ro/9WVcJ3vxBBPt+C8ueT6gZYCW+TEyjo8/yqg
+      AonkezoZ8Q1bL9uoAUh4NTbZ17mNTZf2+pYnbvo9eN/982HgeWC8CMeYzZDJytGN
+      /8U+FNHRWFwpOm6HAdAbadrKQzlm2+nn+KWTYRseDKVOt0C8l2aMmgd5/TwHpVnN
+      p0gzni2nx5ogELPr7XrqlX46tiDmPx3O8D+TJP1E0QKBgQDrS9aHkvGJDllO3RSN
+      6iIZ8JiTzYPwyHSeWnmLPurqb68Li2KkUURjqU5p7wE6Cz03ay8CLZn12i5km/Ns
+      2xHCWa2HSIbB7Ec25rqshK/Ep3CJff9Jdiyjm92NYhEp++PI4YJOR9j5XsaMQXfl
+      +xbIT99N1x/hRJymHQ/1BBIS0QKBgQDNtnnTQq4A03Ag9YtMHKoyDn0ifIRnVs/R
+      jPD/qDBo7+gkfg2K3GwRSTxNF7T1zcPSEzGCqi6yinuy0ZIvQnjuMCPE+IGl28GV
+      IMwEaYFbLWUxvtUvPDGrDlAOIgwHxdznKb/zML7b6mH2Y0SmZGtpQ9W6UrfTf/uL
+      mRo2bm4mSQKBgQC3VYf6asw39i4v/KKfUObxPz4jK+a6HfZ/zA8YKBXyRMMnQ5vA
+      XHHlFW47rDZQe6FfJOyjzdRAc5fiXID3OFpGDIng9unI/8kdRfn9ogUyPSS6fKoF
+      G0b809105AxrohCB3PQi+mhdJTOe5QP+9f1yZomfpRb59vP3mn1sc5eBgQKBgAXQ
+      LkkmDTzAvN5xkeootTaM6kRbOHKjJWRKk1TmL9gHT4wYc9GEwRkL9MRI8zgvBGWf
+      XTrQDFnHSA+ZlIP5YOl6OsiKLT++og3Qy3MkeB9XfRCWz/dxwAWRdfmwRJ7DnKZ7
+      q4z3x6z3RqVr0LjTBaYH4LZPOBql9znOrcrz+/DhAoGBANl9m+Kc5frqMYaANVUx
+      8YfvwjK7IxDRzOTv2Gc8Y/z+SIEN/4HTYagn5UaGsIgndpjZbFoSXeICf96johf+
+      +mb6RvteQgl41j2U/EAKaVmTzyI6YPvIxVjRpC8fuu7leWgtGx8jeRRsSO67LQQq
+      fyG0sk29/mDT7fGRz00RLU9t
+      -----END PRIVATE KEY-----`;
+
+        new PharmacyOrder("#order", session, {
+          case: "CASE-001",
+          environment,
+          clinic: "clinic-test",
+          clinician: "ext-testclinician-jun2",
+          patient: "474911",
+          privateKey,
+          // drugs: {
+          //   message: "Medication selected based on patient preference.",
+          //   selected: ["DRUG_EXTERNAL_ID"],
+          // },
+        });
+      }
+
+      initPharmacyOrder().catch((error) => {
+        console.error(error);
+      });
+    </script>
+  </body>
+</html>
