@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pharmacy.js Minimal Example</title>
     <script
-      src="https://pharmacy.js.wellsync.io/client.js"
+      src="https://pharmacy.order.ui.wellsync.io/client.js"
       type="application/javascript"
     ></script>
   </head>
@@ -88,4 +88,10 @@
       });
     </script>
   </body>
-</html>
+
+  <!--
+1. Create a clinic POST /v1/clinics ( external_id: clinic-test )
+2. Create a clinian POST /v1/users ( external_id: ext-testclinician-jun2, role: clinician )
+3. Add a public key to the clinician POST /v1/users/{userId}/public-keys ( internal id )
+3. Create a patient POST /v1/patients ( external_id: 474911 ) <---
+--></html>
